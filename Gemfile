@@ -1,32 +1,46 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-puppetversion = ENV['PUPPET_VERSION'] || '~> 3.8.0'
-gem 'puppet', puppetversion, :require => false
+group :test do
+  gem 'gettext', '< 3.3.0'
+  gem 'json_pure', '<= 2.0.1' if RUBY_VERSION < '2.0.0'
+  gem 'jsonlint'
 
-gem 'beaker'
-gem 'beaker-rspec'
-gem 'metadata-json-lint'
-gem 'rspec-puppet', '2.2.0'
+  gem 'metadata-json-lint'
 
-gem 'pry'
-gem 'docker-api', '~> 1.0'
-gem 'rubysl-securerandom'
-gem 'ci_reporter_rspec'
-gem 'rspec', '~> 3.0'
-gem 'rake'
-gem 'puppet-doc-lint'
-gem 'puppet-lint'
-gem 'puppetlabs_spec_helper'
-gem 'puppet-syntax'
-gem 'rspec-puppet-facts'
-gem 'webmock'
+  gem 'openssl'
 
-# Extra Puppet-lint gems
-gem 'puppet-lint-appends-check', :require => false
-gem 'puppet-lint-version_comparison-check', :require => false
-gem 'puppet-lint-unquoted_string-check', :require => false
-gem 'puppet-lint-undef_in_function-check', :require => false
-gem 'puppet-lint-trailing_comma-check', :require => false
-gem 'puppet-lint-leading_zero-check', :require => false
-gem 'puppet-lint-file_ensure-check', :require => false
-gem 'puppet-lint-empty_string-check', :require => false
+  gem 'puppet', '~> 4.10.0'
+  gem 'puppet-lint'
+  gem 'puppet-lint-absolute_classname-check'
+  gem 'puppet-lint-classes_and_types_beginning_with_digits-check'
+  gem 'puppet-lint-leading_zero-check'
+  gem 'puppet-lint-resource_reference_syntax'
+  gem 'puppet-lint-trailing_comma-check'
+  gem 'puppet-lint-unquoted_string-check'
+  gem 'puppet-lint-version_comparison-check'
+  gem 'puppet-syntax'
+
+  gem 'puppetlabs_spec_helper'
+
+  gem 'rake'
+  gem 'rspec'
+  gem 'rspec-puppet'
+  gem 'rspec-puppet-facts'
+  gem 'rubocop', '0.54.0'
+
+  gem 'semantic_puppet'
+  gem 'simplecov'
+  gem 'simplecov-console'
+end
+
+group :development do
+  gem 'git'
+
+  gem 'puppet-blacksmith'
+  gem 'puppet-strings'
+
+  gem 'redcarpet'
+end
+
+group :system_tests do
+end
