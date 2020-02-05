@@ -13,7 +13,6 @@ end
 SEPARATOR = [Regexp.escape(File::SEPARATOR.to_s), Regexp.escape(File::ALT_SEPARATOR.to_s)].join
 
 Puppet::Reports.register_report(:logstash) do
-
   config_file = File.join([File.dirname(Puppet.settings[:config]), "logstash.yaml"])
   unless File.exist?(config_file)
     raise(Puppet::ParseError, "Logstash report config file #{config_file} missing or not readable")
@@ -25,7 +24,6 @@ Puppet::Reports.register_report(:logstash) do
   DESCRIPTION
 
   def process
-
     validate_host(self.host)
 
     # Push all log lines as a single message
@@ -38,7 +36,9 @@ Puppet::Reports.register_report(:logstash) do
     event["host"] = self.host
     event["@timestamp"] = Time.now.utc.iso8601
     event["@version"] = 1
-    event["tags"] = ["puppet-#{self.kind}"]
+    if Puppet.version <= '5.0.0'
+      event["tags"] = ["puppet-#{self.kind}"]
+    end
     event["message"] = "Puppet run on #{self.host} #{self.status}"
     event["logs"] = logs
     event["environment"] = self.environment
@@ -59,7 +59,7 @@ Puppet::Reports.register_report(:logstash) do
     begin
       Timeout::timeout(CONFIG[:timeout]) do
         json = event.to_json
-        ls = TCPSocket.new "#{CONFIG[:host]}" , CONFIG[:port]
+        ls = TCPSocket.new CONFIG[:host].to_s , CONFIG[:port]
         ls.puts json
         ls.close
       end
