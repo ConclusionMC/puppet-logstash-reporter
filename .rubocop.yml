@@ -186,6 +186,9 @@ Style/ClassVars:
 Style/WhenThen:
   Enabled: false
 
+Style/MixinUsage:
+  Enabled: false
+
 # DISABLED - not useful
 Style/WordArray:
   Enabled: false
