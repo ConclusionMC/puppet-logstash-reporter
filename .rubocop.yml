@@ -138,6 +138,12 @@ Layout/AlignHash:
 Layout/AlignParameters:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
 Metrics/BlockNesting:
   Enabled: false
 
